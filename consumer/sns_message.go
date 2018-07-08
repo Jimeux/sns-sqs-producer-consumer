@@ -1,8 +1,8 @@
-package topic
+package consumer
 
 import "time"
 
-type Message struct {
+type SnsMessage struct {
 	Type             string               // Notification
 	MessageId        string               // 63a3f6b6-d533-4a47-aef9-fcf5cf758c76
 	TopicArn         string               // arn:aws:sns:us-west-2:123456789012:MyTopic

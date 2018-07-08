@@ -6,6 +6,6 @@
 export AWS_ACCESS_KEY_ID="xxx"
 export AWS_SECRET_ACCESS_KEY="xxx"
 export AWS_DEFAULT_REGION="ap-northeast-1"
-export TRACKING_TOPIC_ARN="arn:aws:sns:ap-northeast-1:xxx:TrackingTopic"
-export DELIVERY_QUEUE_URL="https://sqs.ap-northeast-1.amazonaws.com/xxx/DeliveryQueue"
+export TOPIC_ARN="arn:aws:sns:ap-northeast-1:xxx:xxx"
+export QUEUE_URL="https://sqs.ap-northeast-1.amazonaws.com/xxx/xxx"
 ```

@@ -7,6 +7,11 @@ import (
 	"fmt"
 )
 
+const (
+	LongPollingWaitTimeSeconds = 10
+	MaxMessages                = 1
+)
+
 type Consumer struct {
 	client   *sqs.SQS
 	queueURL string
@@ -50,11 +55,11 @@ func (c *Consumer) ReceiveMessage() (*sqs.Message, error) {
 		AttributeNames: aws.StringSlice([]string{
 			sqs.MessageSystemAttributeNameSentTimestamp,
 		}),
-		MaxNumberOfMessages: aws.Int64(1),
+		MaxNumberOfMessages: aws.Int64(MaxMessages),
 		MessageAttributeNames: aws.StringSlice([]string{
 			sqs.QueueAttributeNameAll,
 		}),
-		WaitTimeSeconds: aws.Int64(10),
+		WaitTimeSeconds: aws.Int64(LongPollingWaitTimeSeconds),
 	})
 
 	if err != nil {

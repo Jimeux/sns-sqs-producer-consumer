@@ -10,12 +10,16 @@ import (
 	"os"
 )
 
+// AWS SDKに必要な環境変数を取得する。
+// AWS_ACCESS_KEY_IDとAWS_SECRET_ACCESS_KEYはSDKに自動で認識される。
 var (
 	region   = os.Getenv("AWS_DEFAULT_REGION")
-	queueURL = os.Getenv("QUEUE_URL")
-	topicARN = os.Getenv("TOPIC_ARN")
+	queueURL = os.Getenv("DELIVERY_QUEUE_URL")
+	topicARN = os.Getenv("TRACKING_TOPIC_ARN")
 )
 
+// AWSセッション、SNSクライント、SQSクライントを作成し、
+// 非同期的にメッセージの発行・受信を行う。
 func main() {
 	awsSession, err := session.NewSession(&aws.Config{Region: &region})
 

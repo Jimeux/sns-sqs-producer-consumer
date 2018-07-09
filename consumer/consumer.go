@@ -21,6 +21,7 @@ func New(client *sqs.SQS, queueURL string) *Consumer {
 	return &Consumer{client, queueURL}
 }
 
+// 無限ループでメッセージを受信する
 func (c *Consumer) Consume() {
 	for {
 		snsMessage, err := c.ReceiveMessage()
@@ -35,6 +36,7 @@ func (c *Consumer) Consume() {
 	}
 }
 
+// AWS SDKを利用してSQSキューからメッセージを削除する
 func (c *Consumer) DeleteMessage(handle string, message string) {
 	_, err := c.client.DeleteMessage(&sqs.DeleteMessageInput{
 		QueueUrl:      &c.queueURL,
@@ -49,6 +51,7 @@ func (c *Consumer) DeleteMessage(handle string, message string) {
 	fmt.Println("削除：" + message)
 }
 
+// AWS SDKを利用してSQSキューからメッセージを一つ受信する
 func (c *Consumer) ReceiveMessage() (*sqs.Message, error) {
 	result, err := c.client.ReceiveMessage(&sqs.ReceiveMessageInput{
 		QueueUrl: &c.queueURL,
@@ -59,6 +62,7 @@ func (c *Consumer) ReceiveMessage() (*sqs.Message, error) {
 		MessageAttributeNames: aws.StringSlice([]string{
 			sqs.QueueAttributeNameAll,
 		}),
+		// 一秒以上だとロングポーリングが有効にされる
 		WaitTimeSeconds: aws.Int64(LongPollingWaitTimeSeconds),
 	})
 
@@ -71,6 +75,7 @@ func (c *Consumer) ReceiveMessage() (*sqs.Message, error) {
 	}
 }
 
+// SQSキューから受信されたSNSメッセージをパースしキューから削除する
 func (c *Consumer) processSNSMessage(snsMessage *sqs.Message) {
 	if message, err := ParseMessageJSON(snsMessage); err != nil {
 		fmt.Errorf("メッセージJSONをパースできませんでした")
@@ -80,6 +85,7 @@ func (c *Consumer) processSNSMessage(snsMessage *sqs.Message) {
 	}
 }
 
+// SNSのメッセージをJSONからパースする
 func ParseMessageJSON(snsMessage *sqs.Message) (SnsMessage, error) {
 	var message SnsMessage
 	err := json.Unmarshal([]byte(*snsMessage.Body), &message)

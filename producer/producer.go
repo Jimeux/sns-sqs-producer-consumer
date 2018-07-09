@@ -16,7 +16,7 @@ func New(client *sns.SNS, topicARN string) *Producer {
 	return &Producer{client, topicARN}
 }
 
-// １０メッセージまで一秒ごとに発行する
+// 毎秒1メッセージを10回まで発行する
 func (p *Producer) Produce() {
 	for i := 0; i < 10; i++ {
 		msg := "Message " + strconv.Itoa(i)
@@ -25,7 +25,7 @@ func (p *Producer) Produce() {
 	}
 }
 
-// AWS SDKを使用してSNSへメッセージを発行する
+// AWS SDKを利用してSNSへメッセージを発行する
 func (p *Producer) publishSns(subject string, message string) (string, error) {
 	resp, err := p.client.Publish(&sns.PublishInput{
 		Subject:  &subject,

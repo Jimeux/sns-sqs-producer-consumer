@@ -2,6 +2,8 @@ package consumer
 
 import "time"
 
+// SNSトピックに発行されたメッセージ。件名と本文に加え、
+// JSONドキュメントのメッセージに関するメタデータが含まれる
 type SnsMessage struct {
 	Type             string               // Notification
 	MessageId        string               // 63a3f6b6-d533-4a47-aef9-fcf5cf758c76

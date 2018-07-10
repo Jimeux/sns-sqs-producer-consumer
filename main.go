@@ -14,8 +14,8 @@ import (
 // AWS_ACCESS_KEY_IDとAWS_SECRET_ACCESS_KEYはSDKに自動で認識される。
 var (
 	region   = os.Getenv("AWS_DEFAULT_REGION")
-	queueURL = os.Getenv("DELIVERY_QUEUE_URL")
-	topicARN = os.Getenv("TRACKING_TOPIC_ARN")
+	queueURL = os.Getenv("QUEUE_URL")
+	topicARN = os.Getenv("TOPIC_ARN")
 )
 
 // AWSセッション、SNSクライント、SQSクライントを作成し、
